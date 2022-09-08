@@ -1,0 +1,8 @@
+node_modules
+# Keep environment variables out of version control
+.env
+.dist
+_cacache
+_logs
+_update-notifier-last-checked
+.coverage
