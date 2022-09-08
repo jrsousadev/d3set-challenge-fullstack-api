@@ -12,7 +12,7 @@ CREATE TABLE "peoples" (
 CREATE TABLE "peoplePhones" (
     "id" TEXT NOT NULL,
     "phone" TEXT NOT NULL,
-    "peopleId" TEXT,
+    "peopleId" TEXT NOT NULL,
 
     CONSTRAINT "peoplePhones_pkey" PRIMARY KEY ("id")
 );
@@ -24,4 +24,4 @@ CREATE UNIQUE INDEX "peoples_id_key" ON "peoples"("id");
 CREATE UNIQUE INDEX "peoplePhones_phone_key" ON "peoplePhones"("phone");
 
 -- AddForeignKey
-ALTER TABLE "peoplePhones" ADD CONSTRAINT "peoplePhones_peopleId_fkey" FOREIGN KEY ("peopleId") REFERENCES "peoples"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "peoplePhones" ADD CONSTRAINT "peoplePhones_peopleId_fkey" FOREIGN KEY ("peopleId") REFERENCES "peoples"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

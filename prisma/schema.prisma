@@ -8,11 +8,11 @@ datasource db {
 }
 
 model People {
-  id         String        @id @unique @default(uuid())
-  name       String
-  birthDate  DateTime
-  created_at DateTime      @default(now())
-  phone      PeoplePhone[]
+  id          String        @id @unique @default(uuid())
+  name        String
+  birthDate   DateTime
+  created_at  DateTime      @default(now())
+  peoplePhone PeoplePhone[]
 
   @@map("peoples")
 }
