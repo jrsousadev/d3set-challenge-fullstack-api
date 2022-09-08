@@ -9,5 +9,5 @@ container.registerSingleton<PeopleRepository>(
 
 container.registerSingleton<PeoplePhoneRepository>(
   "PeoplePhoneRepository",
-  PeopleRepository
+  PeoplePhoneRepository
 );
