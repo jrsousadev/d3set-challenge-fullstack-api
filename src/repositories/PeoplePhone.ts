@@ -6,11 +6,13 @@ interface ICreatePeoplePhone {
 }
 
 interface IGetPeoplePhone {
-  id: string;
+  id?: string;
+  phone?: string;
 }
 
 interface IDeletePeoplePhone {
-  id: string;
+  id?: string;
+  phone?: string;
 }
 
 interface IUpdatePeoplePhone {
@@ -31,7 +33,18 @@ export class PeoplePhoneRepository {
     }
   }
 
-  async getOne({ id }: IGetPeoplePhone) {
+  async getOne({ id, phone }: IGetPeoplePhone) {
+    if (phone) {
+      try {
+        return await prismaClient.peoplePhone.findFirst({
+          where: {
+            phone,
+          },
+        });
+      } catch (err) {
+        throw err;
+      }
+    }
     try {
       return await prismaClient.peoplePhone.findFirst({
         where: {
@@ -51,15 +64,29 @@ export class PeoplePhoneRepository {
     }
   }
 
-  async delete({ id }: IDeletePeoplePhone) {
-    try {
-      await prismaClient.peoplePhone.delete({
-        where: {
-          id,
-        },
-      });
-    } catch (err) {
-      throw err;
+  async delete({ id, phone }: IDeletePeoplePhone) {
+    if (phone) {
+      try {
+        await prismaClient.peoplePhone.delete({
+          where: {
+            phone,
+          },
+        });
+      } catch (err) {
+        throw err;
+      }
+    }
+
+    if (id) {
+      try {
+        await prismaClient.peoplePhone.delete({
+          where: {
+            id,
+          },
+        });
+      } catch (err) {
+        throw err;
+      }
     }
   }
 
@@ -71,7 +98,7 @@ export class PeoplePhoneRepository {
         },
         data: {
           phone,
-        }
+        },
       });
     } catch (err) {
       throw err;

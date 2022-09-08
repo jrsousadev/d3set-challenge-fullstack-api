@@ -43,7 +43,6 @@ export class PeopleRepository {
         },
       });
     } catch (err) {
-      console.log(err)
       throw err;
     }
   }

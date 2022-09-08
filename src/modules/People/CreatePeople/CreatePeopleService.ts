@@ -20,6 +20,14 @@ export class CreatePeopleService {
 
   async execute(data: IRequest) {
     try {
+      for await (const index of data.phone) {
+        const existPhone = await this.peoplePhoneRepository.getOne({
+          phone: index,
+        });
+
+        if(existPhone) throw new CustomError("Phone exist", 400);
+      }
+
       const people = await this.peopleRepository.create({
         name: data.name,
         birthDate: data.birthDate,
