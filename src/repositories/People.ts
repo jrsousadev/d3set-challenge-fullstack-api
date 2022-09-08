@@ -3,7 +3,6 @@ import { prismaClient } from "../database/prismaClient";
 interface ICreatePeople {
   name: string;
   birthDate: string;
-  phone: string;
 }
 
 interface IGetPeople {
@@ -12,6 +11,12 @@ interface IGetPeople {
 
 interface IDeletePeople {
   id: string;
+}
+
+interface IUpdatePeople {
+  id: string;
+  name: string;
+  birthDate: string;
 }
 
 interface IGetAllPeoples {}
@@ -38,6 +43,7 @@ export class PeopleRepository {
         },
       });
     } catch (err) {
+      console.log(err)
       throw err;
     }
   }
@@ -60,6 +66,22 @@ export class PeopleRepository {
         where: {
           id,
         },
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async update({id, name, birthDate}: IUpdatePeople) {
+    try {
+      await prismaClient.people.update({
+        where: {
+          id,
+        },
+        data: {
+          name, 
+          birthDate
+        }
       });
     } catch (err) {
       throw err;
