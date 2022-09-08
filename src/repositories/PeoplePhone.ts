@@ -2,6 +2,7 @@ import { prismaClient } from "../database/prismaClient";
 
 interface ICreatePeoplePhone {
   phone: string;
+  peopleId: string;
 }
 
 interface IGetPeoplePhone {
@@ -10,6 +11,11 @@ interface IGetPeoplePhone {
 
 interface IDeletePeoplePhone {
   id: string;
+}
+
+interface IUpdatePeoplePhone {
+  id: string;
+  phone: string;
 }
 
 interface IGetAllPeoplePhones {}
@@ -51,6 +57,21 @@ export class PeoplePhoneRepository {
         where: {
           id,
         },
+      });
+    } catch (err) {
+      throw err;
+    }
+  }
+
+  async update({ id, phone }: IUpdatePeoplePhone) {
+    try {
+      await prismaClient.peoplePhone.update({
+        where: {
+          id,
+        },
+        data: {
+          phone,
+        }
       });
     } catch (err) {
       throw err;
