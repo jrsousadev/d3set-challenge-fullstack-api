@@ -9,7 +9,7 @@
     "dev": "ts-node-dev --inspect --transpile-only --ignore-watch node_modules --respawn src/shared/server.ts",
     "build": "tsc",
     "prisma-generate": "prisma generate --schema=./src/prisma/schema.prisma",
-    "start": "node dist/src/shared/server.js",
+    "start": "node dist/shared/server.js",
     "test": "jest"
   },
   "dependencies": {
