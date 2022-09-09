@@ -8,6 +8,7 @@ interface ICreatePeoplePhone {
 interface IGetPeoplePhone {
   id?: string;
   phone?: string;
+  peopleId?: string;
 }
 
 interface IDeletePeoplePhone {
@@ -33,12 +34,13 @@ export class PeoplePhoneRepository {
     }
   }
 
-  async getOne({ id, phone }: IGetPeoplePhone) {
+  async getOne({ id, phone, peopleId }: IGetPeoplePhone) {
     if (phone) {
       try {
         return await prismaClient.peoplePhone.findFirst({
           where: {
             phone,
+            peopleId,
           },
         });
       } catch (err) {
@@ -101,6 +103,7 @@ export class PeoplePhoneRepository {
         },
       });
     } catch (err) {
+      console.log(err)
       throw err;
     }
   }

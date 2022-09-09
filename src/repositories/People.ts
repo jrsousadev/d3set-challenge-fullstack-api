@@ -16,7 +16,7 @@ interface IDeletePeople {
 interface IUpdatePeople {
   id: string;
   name: string;
-  birthDate: string;
+  birthDate: Date;
 }
 
 interface IGetAllPeoples {}
@@ -28,6 +28,7 @@ export class PeopleRepository {
         data: data,
       });
     } catch (err) {
+      console.log(err)
       throw err;
     }
   }
@@ -83,6 +84,7 @@ export class PeopleRepository {
         }
       });
     } catch (err) {
+      console.log(err)
       throw err;
     }
   }
