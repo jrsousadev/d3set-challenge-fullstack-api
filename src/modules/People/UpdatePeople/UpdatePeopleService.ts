@@ -39,12 +39,9 @@ export class UpdatePeopleService {
           String(existPhone.peopleId) !== String(peopleExist.id)
         ) {
           throw new CustomError("Phone exist", 400);
-        }
+        } 
       }
-      
-      console.log("==================")
-      console.log(new Date(birthDate))
-      console.log("==================")
+    
 
       await this.peopleRepository.update({ id: String(id), name, birthDate: new Date(birthDate) });
 
@@ -55,6 +52,13 @@ export class UpdatePeopleService {
             phone: index.phone,
           });
         } 
+
+        if (!index.id) {
+          await this.peoplePhoneRepository.create({
+            peopleId: peopleExist.id,
+            phone: index.phone,
+          })
+        }
 
         if(index.phone === ""){
           await this.peoplePhoneRepository.delete({
