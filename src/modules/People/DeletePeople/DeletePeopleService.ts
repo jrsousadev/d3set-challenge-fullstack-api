@@ -21,10 +21,12 @@ export class DeletePeopleService {
         id: String(id)
       });
 
-      for await (const index of people.peoplePhone) {
-        await this.peoplePhoneRepository.delete({
-          phone: index.phone,
-        })
+      if(people) {
+        for await (const index of people.peoplePhone) {
+          await this.peoplePhoneRepository.delete({
+            phone: index.phone,
+          })
+        }
       }
 
       await this.peopleRepository.delete({
