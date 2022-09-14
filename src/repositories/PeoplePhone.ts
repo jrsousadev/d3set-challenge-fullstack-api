@@ -35,7 +35,18 @@ export class PeoplePhoneRepository {
   }
 
   async getOne({ id, phone, peopleId }: IGetPeoplePhone) {
-    if (phone) {
+    if (phone && !peopleId) {
+      try {
+        return await prismaClient.peoplePhone.findFirst({
+          where: {
+            phone,
+          },
+        });
+      } catch (err) {
+        throw err;
+      }
+    }
+    if (phone && peopleId) {
       try {
         return await prismaClient.peoplePhone.findFirst({
           where: {
@@ -47,14 +58,16 @@ export class PeoplePhoneRepository {
         throw err;
       }
     }
-    try {
-      return await prismaClient.peoplePhone.findFirst({
-        where: {
-          id,
-        },
-      });
-    } catch (err) {
-      throw err;
+    if (id) {
+      try {
+        return await prismaClient.peoplePhone.findFirst({
+          where: {
+            id,
+          },
+        });
+      } catch (err) {
+        throw err;
+      }
     }
   }
 
@@ -103,7 +116,7 @@ export class PeoplePhoneRepository {
         },
       });
     } catch (err) {
-      console.log(err)
+      console.log(err);
       throw err;
     }
   }
