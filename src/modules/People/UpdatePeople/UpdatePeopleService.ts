@@ -29,6 +29,8 @@ export class UpdatePeopleService {
       const peopleExist = await this.peopleRepository.getOne({ id });
       if (!peopleExist) throw new CustomError("People is not exist", 400);
 
+      console.log(phones)
+
       for await (const index of phones) {
         const existPhone = await this.peoplePhoneRepository.getOne({
           phone: index.phone,
@@ -39,11 +41,14 @@ export class UpdatePeopleService {
           String(existPhone.peopleId) !== String(peopleExist.id)
         ) {
           throw new CustomError("Phone exist", 400);
-        } 
+        }
       }
-    
 
-      await this.peopleRepository.update({ id: String(id), name, birthDate: new Date(birthDate) });
+      await this.peopleRepository.update({
+        id: String(id),
+        name,
+        birthDate: new Date(birthDate),
+      });
 
       for await (const index of phones) {
         if (typeof index.id !== "undefined" && index.phone !== "") {
@@ -51,19 +56,19 @@ export class UpdatePeopleService {
             id: index.id,
             phone: index.phone,
           });
-        } 
+        }
 
         if (!index.id) {
           await this.peoplePhoneRepository.create({
             peopleId: peopleExist.id,
             phone: index.phone,
-          })
+          });
         }
 
-        if(index.phone === ""){
+        if (index.phone === "") {
           await this.peoplePhoneRepository.delete({
-            id: index.id
-          })
+            id: index.id,
+          });
         }
       }
 
